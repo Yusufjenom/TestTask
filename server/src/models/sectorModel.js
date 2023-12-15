@@ -5,7 +5,7 @@ const sectorSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    sector: {
+    sectors: {
         type: String,
         required: true
     },

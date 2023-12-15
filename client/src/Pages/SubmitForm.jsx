@@ -3,8 +3,8 @@ import {
     Box,
     Button,
     TextField,
-    useMediaQuery,
     Typography,
+    useMediaQuery,
     useTheme,
     FormControl,
     InputLabel,
@@ -14,74 +14,51 @@ import {
     FormControlLabel,
 } from '@mui/material';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
-import { Formik } from 'formik';
+import { useFormik, Formik } from 'formik';
 import * as yup from 'yup';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import CentralizeItems from '../components/CentralizeItems';
+import { submitForm } from '../hooks/apiCalls';
 
 
-const registerSchema = yup.object().shape({
-    name: yup.string().required("required"),
-    sectors: yup.string().required("required"),
-    term: yup.string().required("required")
+const submitSchema = yup.object().shape({
+    name: yup.string().min(3).required("Please enter your name"),
+    sectors: yup.string().required("Please select an option"),
+    term: yup.string().required("Please agree to the terms and conditions")
 });
 
 
 
-const initialValuesRegister = {
+
+const initialValues = {
     name: "",
     sectors: "",
-    term: "",
-}
+    term: false,
+};
 
-
-
+const documentId = JSON.parse(localStorage.getItem("editSafeHouse"));
 
 
 function SubmitForm() {
     const { palette } = useTheme();
-    // const dispatch = useDispatch();
-    // const navigate = useNavigate();
     const isNonMobile = useMediaQuery("(min-width: 600px)");
+    const [id, setId] = useState('');
 
-
-
-    const register = async (values, onSubmitProps) => {
-        const formData = new FormData();
-        for (let value in values) {
-            formData.append(value, values[value])
-        }
-        formData.append('picturePath', values.picture.name);
-
-        const savedUserResponse = await fetch("http://localhost:5000/auth/register", {
-            method: "POST",
-            body: formData,
-
-        });
-
-        const savedUser = await savedUserResponse.json();
-
-        onSubmitProps.resetForm();
-
-        if (savedUser) {
-            setPageType("login");
-        }
-    }
-
-
-
-    const handleFormSubmit = async (values, onSubmitProps) => {
-        // if (isLogin) await login(values, onSubmitProps);
-        // if (isRegister) await register(values, onSubmitProps)
+    //submisson to the backend server
+    const handleFinalSubmission = async (values) => {
+        const response = await submitForm(values);
+        console.log(response.message);
+        localStorage.setItem("editSafeHouse", JSON.stringify(response.message._id));
+        await setId(JSON.parse(localStorage.getItem("editSafeHouse")));
     };
 
 
     return (
         <Formik
-        // onSubmit={handleFormSubmit}
-        // initialValues={isLogin ? initialValuesLogin : initialValuesRegister}
-        // validationSchema={isLogin ? loginSchema : registerSchema}
+            onSubmit={handleFinalSubmission}
+            initialValues={initialValues}
+            validationSchema={submitSchema}
         >
             {({
                 values,
@@ -90,18 +67,15 @@ function SubmitForm() {
                 handleBlur,
                 handleChange,
                 handleSubmit,
-                setFieldValue,
-                resetForm
             }) => (
                 <form onSubmit={handleSubmit}>
                     <Box
-                        component="form"
                         sx={{
                             display: "flex",
                             flexDirection: "column",
                             alignItems: "center",
                             justifyContent: "center",
-                            padding: 2
+                            padding: 5
                         }}
                     >
 
@@ -110,43 +84,77 @@ function SubmitForm() {
                                 label="Name"
                                 onBlur={handleBlur}
                                 onChange={handleChange}
-                                // value={values.firstname}
-                                name='firstname'
+                                value={values.name}
+                                name='name'
                                 fullWidth
                                 margin='normal'
-                                // error={Boolean(touched.firstname) && Boolean(errors.firstname)}
-                                // helperText={touched.firstname && errors.fristname}
                                 sx={{
                                     marginBottom: 2
                                 }}
                             />
 
+                            {errors.name && (
+                                <Typography
+                                    variant='caption'
+                                    color="error"
+                                    gutterBottom
+                                >
+                                    {errors.name}
+                                </Typography>
+                            )}
+
                             <FormControl
                                 variant='outlined'
                                 fullWidth sx={{ marginBottom: 2 }}
+
                             >
                                 <InputLabel id="selectors">Selectors</InputLabel>
                                 <Select
-                                    labelId="selectors"
-                                    label="selector"
+                                    labelId="sectors"
+                                    label="sectors"
+                                    name='sectors'
+                                    value={values.sectors}
+                                    onChange={handleChange}
                                 >
                                     <MenuItem value={"AI"}>Artificial Intelligence</MenuItem>
                                     <MenuItem value={"ML"}>Machine Learning</MenuItem>
                                     <MenuItem value={"DL"}>Deep Learning</MenuItem>
                                 </Select>
                             </FormControl>
+                            {errors.sectors && (
+                                <Typography
+                                    variant='caption'
+                                    color="error"
+                                    gutterBottom
+                                >
+                                    {errors.sectors}
+                                </Typography>
+                            )}
 
                             <FormControlLabel
                                 control={<Checkbox />}
+                                value={values.term}
                                 label="Agree to terms"
+                                name='term'
                                 sx={{ marginBottom: 2 }}
+                                onChange={handleChange}
                             />
+                            {errors.term && (
+                                <Typography
+                                    variant='caption'
+                                    color="error"
+                                    gutterBottom
+                                >
+                                    {errors.term}
+                                </Typography>
+                            )}
 
 
                             <Button
                                 fullWidth
                                 type='submit'
                                 margin='normal'
+                                disabled={values.term == false}
                                 sx={{
                                     m: ".3rem 1rem",
                                     p: "1rem",
@@ -157,7 +165,7 @@ function SubmitForm() {
                             >
                                 SAVE
                             </Button>
-
+                            <Link to={`/update/${id}`}>Edit</Link>
                         </>
 
                     </Box>

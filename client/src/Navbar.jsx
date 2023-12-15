@@ -30,8 +30,8 @@ function Navbar() {
   const primaryLight = theme.palette.primary.light;
   const alt = theme.palette.background.alt;
 
-  //const fullName = `${user.firstname} ${user.lastname}`;
-  const fullName = `Ajijola Fauziya`;
+
+  const fullName = `Dauda Yusuf Test`;
 
   return (
     <CentralizeItems padding='1rem 6%' backgroundColor={alt}>
@@ -46,30 +46,17 @@ function Navbar() {
             }
           }}
         >
-          YusZiya
+          Dauda Yusuf Test
         </Typography>
-        {isNonMobileScreens && (
-          <CentralizeItems backgroundColor={alt} borderRadius={"9px"}
-            gap={'3rem'} padding={'0.1rem 1.5rem'}
-          >
-            <InputBase placeholder='Search...' />
-            <IconButton>
-              <Search />
-            </IconButton>
-          </CentralizeItems>
-        )}
+
       </CentralizeItems>
+
       {/* DESKTOP NAV */}
       {isNonMobileScreens ?
         (
           <CentralizeItems gap={'2rem'}>
-            {/* <IconButton onClick={() => dispatch(setMode())}>
-              {theme.palette.mode === "dark" ? (
-                <DarkMode sx={{ fontSize: "25px" }} />
-              ) : (<LightMode sx={{ color: dark, fontSize: "25px" }} />)}
-            </IconButton> */}
             <FormControl variant='standard' value={fullName} >
-              
+
             </FormControl>
           </CentralizeItems>) :
         (<IconButton onClick={() => setIsMobileMenuToggled(!isMobileMenuToggled)}>
@@ -100,7 +87,7 @@ function Navbar() {
           <CentralizeItems display="flex" flexDirection={'column'}
             justifyContent={'center'} alignContent={'center'} gap={'3rem'}>
 
-           
+
           </CentralizeItems>
 
         </Box>

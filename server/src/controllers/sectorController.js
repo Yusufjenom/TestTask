@@ -11,8 +11,8 @@ const {
 //creating a post
 const createASectorPost = async (req, res) => {
     try{
-       const {name, sector, term} = req.body;
-       const savedPost = await createSector({name, sector, term});
+       const {name, sectors, term} = req.body;
+       const savedPost = await createSector({name, sectors, term});
        res.status(201).json({
         success: true,
         message: savedPost

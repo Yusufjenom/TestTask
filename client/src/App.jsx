@@ -16,7 +16,7 @@ function App() {
         <Route path='/' element={<RootLayout/>}>
             <Route index element={<Home/>}/>
             <Route path='/submit' element={<SubmitForm/>}/>
-            <Route path='/update' element={<EditForm/>}/>
+            <Route path='/update/:id' element={<EditForm/>}/>
         </Route>
       ))
   return (

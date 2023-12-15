@@ -15,9 +15,8 @@ app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 app.use(cors({
     origin: process.env.CLIENT_ORIGIN,
-    credentials: true
-}));
-
+    credentials: true,
+  }));
 
 //route middleware
 app.use('/api/v1', sectorRoutes);

@@ -7,12 +7,16 @@ import { createBrowserRouter,
           } from 'react-router-dom';
 import RootLayout from './RootLayout';
 import Home from './Pages/Home';
+import SubmitForm from './Pages/SubmitForm';
+import EditForm from './Pages/EditForm';
 
 
 function App() {
       const router = createBrowserRouter(createRoutesFromElements(
         <Route path='/' element={<RootLayout/>}>
             <Route index element={<Home/>}/>
+            <Route path='/submit' element={<SubmitForm/>}/>
+            <Route path='/update' element={<EditForm/>}/>
         </Route>
       ))
   return (

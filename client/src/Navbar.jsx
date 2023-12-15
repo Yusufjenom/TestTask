@@ -4,8 +4,6 @@ import {
   IconButton,
   InputBase,
   Typography,
-  Select,
-  MenuItem,
   FormControl,
   useTheme,
   useMediaQuery
@@ -27,7 +25,6 @@ function Navbar() {
   const isNonMobileScreens = useMediaQuery("(min-width: 1000px)");
 
   const theme = useTheme();
-  //const neutralLight = theme.palette.neutral.light;
   const dark = theme.palette.dark;
   const background = theme.palette.background.default;
   const primaryLight = theme.palette.primary.light;
@@ -66,37 +63,13 @@ function Navbar() {
       {isNonMobileScreens ?
         (
           <CentralizeItems gap={'2rem'}>
-            <IconButton onClick={() => dispatch(setMode())}>
+            {/* <IconButton onClick={() => dispatch(setMode())}>
               {theme.palette.mode === "dark" ? (
                 <DarkMode sx={{ fontSize: "25px" }} />
               ) : (<LightMode sx={{ color: dark, fontSize: "25px" }} />)}
-            </IconButton>
-            <Message sx={{ fontSize: "25px" }} />
-            <Notifications sx={{ fontSize: "25px" }} />
-            <Help sx={{ fontSize: "25px" }} />
+            </IconButton> */}
             <FormControl variant='standard' value={fullName} >
-              <Select value={fullName}
-                sx={{
-                  backgroundColor: alt,
-                  width: "150px",
-                  borderRadius: "0.25rem",
-                  p: "0.25rem 1rem",
-                  "& .MuiSvgIcon-root": {
-                    pr: "0.25rem",
-                    width: "3rem"
-                  },
-                  "& .MuiSelect-select: focus": {
-                    backgroundColor: alt
-                  }
-                }}
-                input={<InputBase />}
-              >
-                <MenuItem value={fullName}>
-                  <Typography>{fullName}</Typography>
-                </MenuItem>
-
-                <MenuItem onClick={() => dispatch(setLogout())}>Log Out</MenuItem>
-              </Select>
+              
             </FormControl>
           </CentralizeItems>) :
         (<IconButton onClick={() => setIsMobileMenuToggled(!isMobileMenuToggled)}>
@@ -127,40 +100,7 @@ function Navbar() {
           <CentralizeItems display="flex" flexDirection={'column'}
             justifyContent={'center'} alignContent={'center'} gap={'3rem'}>
 
-            <IconButton onClick={() => dispatch(setMode())}
-              sx={{ fontSize: "25px" }}
-            >
-              {theme.palette.mode === "dark" ? (
-                <DarkMode sx={{ fontSize: "25px" }} />
-              ) : (<LightMode sx={{ color: dark, fontSize: "25px" }} />)}
-            </IconButton>
-            <Message sx={{ fontSize: "25px" }} />
-            <Notifications sx={{ fontSize: "25px" }} />
-            <Help sx={{ fontSize: "25px" }} />
-            <FormControl variant='standard' value={fullName} >
-              <Select value={fullName}
-                sx={{
-                  backgroundColor: alt,
-                  width: "150px",
-                  borderRadius: "0.25rem",
-                  p: "0.25rem 1rem",
-                  "& .MuiSvgIcon-root": {
-                    pr: "0.25rem",
-                    width: "3rem"
-                  },
-                  "& .MuiSelect-select: focus": {
-                    backgroundColor: alt
-                  }
-                }}
-                input={<InputBase />}
-              >
-                <MenuItem value={fullName}>
-                  <Typography>{fullName}</Typography>
-                </MenuItem>
-
-                <MenuItem onClick={() => dispatch(setLogout())}>Log Out</MenuItem>
-              </Select>
-            </FormControl>
+           
           </CentralizeItems>
 
         </Box>

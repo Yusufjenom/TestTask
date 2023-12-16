@@ -14,7 +14,8 @@ const port = process.env.PORT || 8080;
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 app.use(cors({
-    origin: "https://test-task-client-psi.vercel.app",
+    origin: ["https://test-task-client-psi.vercel.app"],
+    methods: ["POST", "GET"],
     credentials: true,
   }));
 

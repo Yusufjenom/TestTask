@@ -10,9 +10,6 @@
   "version": "1.0.0",
   "description": "This is a test task assigned to me, to build a semi CRUD application",
   "main": "app.js",
-  "engines":{
-    "node": "18.17.0"
-  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node app.js",

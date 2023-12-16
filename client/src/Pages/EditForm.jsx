@@ -29,57 +29,46 @@ const submitSchema = yup.object().shape({
 });
 
 
-
-
 const initialValues = {
     name: "",
     sectors: ""
 };
 
 
-
-
 function EditForm() {
     const { palette } = useTheme();
     const isNonMobile = useMediaQuery("(min-width: 600px)");
     const { id } = useParams();
-    const [presentName, setPresentName] = useState('');
-    const [presentSector, setPresentSector] = useState('');
-
+    const [savedValues, setSavedValues] = useState(null);
 
 
     //submisson to the backend server
-    const handleFinalSubmission = async (id, values) => {
+    const handleFinalSubmission = async (values) => {
         const response = await updatePost(id, values);
-        console.log(response);
-    }
-
+        await setSavedValues(response.message);
+    };
 
     //getting the previous post so as to make a view for update
     const retrievePreviousPost = async (id) => {
         const response = await getApost(id);
-        console.log(response);
-        await setPresentName(response.message.name);
-        await setPresentSector(response.message.sectors);
-        initialValues.name = presentName
-        initialValues.sectors = presentSector
+        await setSavedValues(response.message);
     };
 
-    console.log(presentName);
-    console.log(presentSector);
+
 
     useEffect(() => {
-     retrievePreviousPost(id)
-    
+        retrievePreviousPost(id)
+        handleFinalSubmission()
     }, []);
 
-console.log(initialValues)
+
     return (
-        
+
         <Formik
             onSubmit={handleFinalSubmission}
-            initialValues={initialValues}
+            initialValues={savedValues || initialValues}
             validationSchema={submitSchema}
+            enableReinitialize
         >
             {({
                 values,
@@ -96,7 +85,8 @@ console.log(initialValues)
                             flexDirection: "column",
                             alignItems: "center",
                             justifyContent: "center",
-                            padding: 5
+                            padding: 5,
+                            width: "70%"
                         }}
                     >
 
@@ -105,7 +95,7 @@ console.log(initialValues)
                                 label="Name"
                                 onBlur={handleBlur}
                                 onChange={handleChange}
-                                value={presentName || values.name}
+                                value={values.name}
                                 name='name'
                                 fullWidth
                                 margin='normal'

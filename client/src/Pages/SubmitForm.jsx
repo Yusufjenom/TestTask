@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     Box,
     Button,
@@ -14,7 +14,7 @@ import {
     FormControlLabel,
 } from '@mui/material';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
-import { useFormik, Formik } from 'formik';
+import { ErrorMessage, Formik } from 'formik';
 import * as yup from 'yup';
 import { useNavigate, Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
@@ -44,15 +44,19 @@ function SubmitForm() {
     const { palette } = useTheme();
     const isNonMobile = useMediaQuery("(min-width: 600px)");
     const [id, setId] = useState('');
+    const navigate = useNavigate();
 
     //submisson to the backend server
     const handleFinalSubmission = async (values) => {
         const response = await submitForm(values);
-        console.log(response.message);
         localStorage.setItem("editSafeHouse", JSON.stringify(response.message._id));
         await setId(JSON.parse(localStorage.getItem("editSafeHouse")));
     };
 
+
+    useEffect(() => {
+        setId(JSON.parse(localStorage.getItem("editSafeHouse")));
+    }, [])
 
     return (
         <Formik
@@ -63,7 +67,6 @@ function SubmitForm() {
             {({
                 values,
                 errors,
-                touched,
                 handleBlur,
                 handleChange,
                 handleSubmit,
@@ -75,7 +78,8 @@ function SubmitForm() {
                             flexDirection: "column",
                             alignItems: "center",
                             justifyContent: "center",
-                            padding: 5
+                            padding: 5,
+                            width: "70%"
                         }}
                     >
 
@@ -94,13 +98,13 @@ function SubmitForm() {
                             />
 
                             {errors.name && (
-                                <Typography
+                                <ErrorMessage
                                     variant='caption'
                                     color="error"
                                     gutterBottom
                                 >
                                     {errors.name}
-                                </Typography>
+                                </ErrorMessage>
                             )}
 
                             <FormControl
@@ -165,7 +169,22 @@ function SubmitForm() {
                             >
                                 SAVE
                             </Button>
-                            <Link to={`/update/${id}`}>Edit</Link>
+                            <Typography
+                                sx={{
+                                    textDecoration: "underline",
+                                    color: palette.primary.main,
+                                    "&:hover": {
+                                        cursor: "pointer",
+                                        color: palette.primary.light
+                                    }
+                                }}
+                            >
+                                <Link to={`/update/${id}`} disabled={values.term == false}>
+                                    Edit Input Details
+                                </Link>
+                            </Typography>
+
+
                         </>
 
                     </Box>

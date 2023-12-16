@@ -74,9 +74,12 @@ const upDateAPost = async (req, res) => {
         sector, 
         term
       });
+
+      const newUpdatedPost = await getSectorById(id);
+
       res.status(200).json({
         success: true,
-        message: updatedPost
+        message: newUpdatedPost
       });
     }
     catch(err){

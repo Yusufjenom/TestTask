@@ -7,6 +7,9 @@ import { createBrowserRouter,
 import RootLayout from './RootLayout';
 import SubmitForm from './Pages/SubmitForm';
 import EditForm from './Pages/EditForm';
+import axios from 'axios';
+
+axios.defaults.withCredentials = true;
 
 function App() {
       const router = createBrowserRouter(createRoutesFromElements(

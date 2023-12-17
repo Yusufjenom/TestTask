@@ -9,7 +9,7 @@
   "name": "server",
   "version": "1.0.0",
   "description": "This is a test task assigned to me, to build a semi CRUD application",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js",

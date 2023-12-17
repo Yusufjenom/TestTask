@@ -2,7 +2,7 @@ import axios from 'axios';
 
 export const submitForm = async (payload) => {
     try{
-       const response = await axios.post("http://localhost:5000/api/v1/create-post", payload, {
+       const response = await axios.post("https://test-task-server-navy.vercel.app/api/v1/create-post", payload, {
         withCredentials: true
        });
        const result = await response.data;
@@ -15,7 +15,7 @@ export const submitForm = async (payload) => {
 
 export const getApost = async (id) => {
     try{
-      const response = await axios.get(`http://localhost:5000/api/v1/post/${id}`);
+      const response = await axios.get(`https://test-task-server-navy.vercel.app/api/v1/post/${id}`);
       const result = await response.data;
       return result;
     }
@@ -26,7 +26,7 @@ export const getApost = async (id) => {
 
 export const getPosts = async () => {
     try{
-      const response = await axios.get(`http://localhost:5000/api/v1/posts`);
+      const response = await axios.get(`https://test-task-server-navy.vercel.app/api/v1/posts`);
       const result = await response.data;
       console.log(result);
       return result;
@@ -38,7 +38,7 @@ export const getPosts = async () => {
 
 export const updatePost = async (id, payload) => {
     try{
-      const response = await axios.put(`http://localhost:5000/api/v1/update-post/${id}`, payload, {
+      const response = await axios.put(`https://test-task-server-navy.vercel.app/api/v1/update-post/${id}`, payload, {
         withCredentials: true
       });
       const result = await response.data;

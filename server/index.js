@@ -13,10 +13,13 @@ const port = 8080;
 //root file middleware
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
-app.use(cors({
-    origin: "https://test-task-client-psi.vercel.app",
-    credentials: true,
-  }));
+const corsConfig = {
+  origin: '',
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE']
+}
+app.use(cors(corsConfig))
+app.options("", cors(corsConfig))
 
 //route middleware
 app.use('/api/v1', sectorRoutes);

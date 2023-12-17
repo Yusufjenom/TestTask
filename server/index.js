@@ -8,7 +8,7 @@ const cors = require('cors');
 const app = express();
 
 //creating listening port
-const port = process.env.PORT || 8080;
+const port = 8080;
 
 //root file middleware
 app.use(express.urlencoded({extended: true}));
@@ -25,7 +25,7 @@ app.use('/api/v1', sectorRoutes);
 (async function(){
     try{
       const connected =  await connectToDb();
-          app.listen(port, () => console.log(`server listening for request on: ${process.env.PORT}`));
+          app.listen(port, () => console.log(`server listening for request on: ${port}`));
     }
     catch(err){
         console.log(err.message)

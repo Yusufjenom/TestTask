@@ -14,12 +14,12 @@ const port = 8080;
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 const corsConfig = {
-  origin: '',
+  origin: ["https://test-task-frontend-six.vercel.app"],
   credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE']
+  methods: ['GET', 'POST', 'PUT']
 }
 app.use(cors(corsConfig))
-app.options("", cors(corsConfig))
+//app.options("", cors(corsConfig))
 
 //route middleware
 app.use('/api/v1', sectorRoutes);

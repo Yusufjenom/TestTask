@@ -21,6 +21,13 @@ app.use(cors({
 //route middleware
 app.use('/api/v1', sectorRoutes);
 
+
+//testing route
+app.get('/', (req, res) => {
+  res.send("working")
+});
+
+
 //database connection and app listining function using an IIFE
 (async function(){
     try{
